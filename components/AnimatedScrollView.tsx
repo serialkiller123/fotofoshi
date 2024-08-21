@@ -1,27 +1,21 @@
-import type { PropsWithChildren, ReactElement } from "react";
-import { StyleSheet, useColorScheme } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ThemedView } from "@/components/ThemedView";
+const HEADER_HEIGHT = 60;
 
-const HEADER_HEIGHT = 250;
+type Props = {
+  title: string;
+  children: React.ReactNode;
+};
 
-type Props = PropsWithChildren<{
-  headerImage: ReactElement;
-  headerBackgroundColor: { dark: string; light: string };
-}>;
-
-export default function ParallaxScrollView({
-  children,
-  headerImage,
-  headerBackgroundColor,
-}: Props) {
-  const colorScheme = useColorScheme() ?? "light";
+export default function AnimatedScrollView({ children, title }: Props) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
 
@@ -47,20 +41,14 @@ export default function ParallaxScrollView({
   });
 
   return (
-    <ThemedView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
-        <Animated.View
-          style={[
-            styles.header,
-            { backgroundColor: headerBackgroundColor[colorScheme] },
-            headerAnimatedStyle,
-          ]}
-        >
-          {headerImage}
+        <Animated.View style={[styles.header, headerAnimatedStyle]}>
+          <Text style={styles.headerTitle}>{title}</Text>
         </Animated.View>
-        <ThemedView style={styles.content}>{children}</ThemedView>
+        <View style={styles.content}>{children}</View>
       </Animated.ScrollView>
-    </ThemedView>
+    </SafeAreaView>
   );
 }
 
@@ -69,13 +57,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    height: 250,
+    height: HEADER_HEIGHT,
+    backgroundColor: "transparent",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
     overflow: "hidden",
+    paddingHorizontal: 32,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333", // Dark text color for contrast
   },
   content: {
     flex: 1,
     padding: 32,
     gap: 16,
-    overflow: "hidden",
   },
 });
