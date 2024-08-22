@@ -16,7 +16,7 @@ Fotofoshi is a photo sharing platform that allows users to share photos.
 
 1. Clone the backend repository:
 
-   git clone https://github.com/Aljullu/fotofoshi-backend.git
+   git clone https://github.com/serialkiller123/server-fotofoshi.git
 
 2. Serve the backend:
 
@@ -24,7 +24,7 @@ Fotofoshi is a photo sharing platform that allows users to share photos.
 
 3. Clone the mobile app repository:
 
-   git clone https://github.com/Aljullu/fotofoshi-mobile.git
+   git clone https://github.com/serialkiller123/fotofoshi.git
 
 4. Install dependencies:
 
