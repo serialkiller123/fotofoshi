@@ -6,23 +6,34 @@ import {
   getSettings,
   deleteSettings,
 } from "@/services/tokenService";
-import { createAxiosInstance } from "@/services/api";
+import { createAxiosInstance, handleError } from "@/services/api";
+import axios from "axios";
+import { router } from "expo-router";
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState([]);
   const [loading, setLoading] = useState(true);
   const [baseURL, setBaseURL] = useState(null);
   const [authToken, setAuthToken] = useState(null);
   const [apiKey, setApikey] = useState(null);
+  const Axios = createAxiosInstance(baseURL, apiKey);
 
-  const axios = createAxiosInstance(baseURL, apiKey);
+  const dispatchPhoto = (photo) => {
+    setSelectedImage(photo);
+  };
+
+  const handleDiscard = () => {
+    setSelectedImage(null);
+    router.push("/");
+  };
 
   const getImages = async () => {
     try {
-      const { data } = await axios.get("/api/images-app");
+      const { data } = await Axios.get("/api/images-app");
       return data;
     } catch (error) {
       handleError(error);
@@ -38,7 +49,7 @@ const UserProvider = ({ children }) => {
       const data = await getImages();
       if (Array.isArray(data)) {
         setImages(data);
-        console.log(data);
+        // console.log(data);
       } else {
         console.error("Expected an array of images, but got:", data);
         setImages([]);
@@ -61,11 +72,29 @@ const UserProvider = ({ children }) => {
       setApikey(settings.apiKey);
       setBaseURL(settings.websiteDomain);
 
-      if (user && token) {
-        setUser(user);
+      if (token) {
+        const response = await axios.get(
+          `${settings.websiteDomain}/api/user`,
+
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // console.log("My Usercontext", response.data);
+        // console.log("token---", token);
+        setUser(response.data);
+      }
+
+      if (user) {
+        // setUser(user);
         setAuthToken(token);
       }
     } catch (error) {
+      handleError(error);
       console.error("Failed to initialize user data:", error);
     } finally {
       setLoading(false);
@@ -91,6 +120,10 @@ const UserProvider = ({ children }) => {
         initializeSettings,
         images,
         fetchImages,
+        selectedImage,
+        setSelectedImage,
+        dispatchPhoto,
+        handleDiscard,
       }}
     >
       {children}

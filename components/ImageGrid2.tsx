@@ -1,32 +1,23 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
-  StyleProp,
-  ViewStyle,
-  TextStyle,
-  ImageStyle,
   FlatList,
 } from "react-native";
 import { UserContext } from "@/context/UserContext";
-import { createAxiosInstance, handleError } from "@/services/api";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
+import { Image } from "react-native-elements";
 
-// Define types for image data
 interface ImageData {
   id: string;
   filename: string;
   description?: string;
 }
 
-// Define types for the component props
-
 const ImageGrid2: React.FC = () => {
-  const { baseURL, authToken, apiKey, images } = useContext(UserContext);
+  const { baseURL, images } = useContext(UserContext);
   const [imageList, setImageList] = useState<ImageData[]>([]);
 
   useEffect(() => {
@@ -58,12 +49,12 @@ const ImageGrid2: React.FC = () => {
           data={imageList}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          style={styles.flatlist}
           numColumns={3}
+          showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <Text style={styles.noImages}>No images available.</Text>
           }
-          contentContainerStyle={styles.container}
+          contentContainerStyle={styles.flatlist}
         />
       )}
     </View>
@@ -78,7 +69,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   flatlist: {
-    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: 10,
   },
   imageContainer: {
     margin: 5,

@@ -5,19 +5,23 @@ import { Ionicons } from "@expo/vector-icons";
 
 interface NavigationHeaderProps {
   title: string;
+  titleColor?: string;
+  iconColor?: string;
   onBack?: () => void;
 }
 
 const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   title,
+  titleColor = "white",
+  iconColor = "white",
   onBack,
 }) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={onBack} style={styles.backButton}>
-        <Ionicons name="chevron-back" size={20} color="white" />
+        <Ionicons name="chevron-back" size={20} color={iconColor} />
       </TouchableOpacity>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, { color: titleColor }]}>{title}</Text>
     </View>
   );
 };
@@ -25,7 +29,7 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 const styles = StyleSheet.create({
   header: {
     position: "absolute",
-    top: 30,
+    top: 35,
     left: 0,
     right: 0,
     height: 80,
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "semibold",
-    color: "white",
+
     flex: 1,
   },
 });

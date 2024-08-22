@@ -5,20 +5,17 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
-  Image,
 } from "react-native";
 import React, { useContext } from "react";
 import { deleteAuthData, getToken } from "../../services/tokenService";
 import axios from "axios";
 import { router } from "expo-router";
 import { UserContext } from "../../context/UserContext";
-import { createAxiosInstance, handleError } from "@/services/api";
+import { handleError } from "@/services/api";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Profile() {
-  const { user, loading, authToken, apiKey, baseURL } = useContext(UserContext);
-
-  // const axios = createAxiosInstance(baseURL, apiKey);
+  const { user, loading, baseURL } = useContext(UserContext);
 
   if (loading) {
     return <ActivityIndicator size="large" />;
@@ -27,7 +24,7 @@ export default function Profile() {
   const handleLogout = async () => {
     try {
       const token = await getToken();
-      console.log("token---", token);
+      // console.log("token---", token);
 
       const csrfResponse = await axios.get(`${baseURL}/sanctum/csrf-cookie`);
       const csrfToken = csrfResponse.data.csrfToken;
@@ -35,7 +32,6 @@ export default function Profile() {
       axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
       if (token) {
-        // const response = await axios.post("/api/logout-user");
         const response = await axios.post(
           `${baseURL}/api/logout`,
           {},
@@ -47,20 +43,18 @@ export default function Profile() {
           }
         );
 
-        console.log("Logout response", response.data);
+        // console.log("Logout response", response.data);
 
         await deleteAuthData();
         router.replace("/login");
       }
     } catch (e) {
-      // console.error("Logout Error:", e.response ? e.response.data : e.message);
       handleError(e);
       Alert.alert("Logout Error", "Unable to logout");
     }
   };
   return (
     <View style={styles.container}>
-      {/* User Icon and Info */}
       <View style={styles.iconContainer}>
         <View style={styles.iconBackground}>
           <Ionicons name="person" size={40} color="#D9D9D9" />

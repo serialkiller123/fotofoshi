@@ -1,24 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  DarkTheme,
-  DefaultTheme,
-  Theme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Theme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
-// import { useAuth } from "./context-exmp/authcontext";
 import { getSettings, getToken } from "../services/tokenService";
-import { UserContext, UserProvider } from "@/context/UserContext";
+import { UserProvider } from "@/context/UserContext";
 import CustomHeader from "@/components/CustomHeader";
-import { StatusBar, View } from "react-native";
-import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import { EvilIcons } from "@expo/vector-icons";
 import { Provider } from "react-native-paper";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -63,8 +56,6 @@ export default function RootLayout() {
     return null;
   }
 
-  // const theme = DefaultTheme;
-
   const myDefaultTheme: Theme = {
     dark: false,
     colors: {
@@ -78,20 +69,16 @@ export default function RootLayout() {
   };
 
   return (
-    <Provider>
-      <UserProvider>
+    <UserProvider>
+      <Provider>
         <ThemeProvider value={myDefaultTheme}>
-          <StatusBar backgroundColor="transparent" barStyle="dark-content" />
+          <StatusBar backgroundColor="transparent" style="dark" translucent />
           <AuthStack />
         </ThemeProvider>
-      </UserProvider>
-    </Provider>
+      </Provider>
+    </UserProvider>
   );
 }
-
-const customBackIcon = () => {
-  return <EvilIcons name="arrow-left" size={24} color="black" />;
-};
 
 function AuthStack() {
   return (
@@ -133,17 +120,6 @@ function AuthStack() {
           headerBackImageSource: require("../assets/images/back.png"),
         }}
       />
-      {/* <Stack.Screen
-        name="ImageDetails"
-        options={{
-          headerShown: true,
-          title: "Image Details",
-          headerShadowVisible: false,
-          headerTitleStyle: { color: "#64748B" },
-          headerStyle: { backgroundColor: "#F9FAFB" },
-          headerBackImageSource: require("../assets/images/back.png"),
-        }}
-      /> */}
     </Stack>
   );
 }

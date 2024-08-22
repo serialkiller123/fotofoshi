@@ -1,4 +1,4 @@
-import { router, Tabs, Stack, useRouter } from "expo-router";
+import { router, Tabs } from "expo-router";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -14,11 +14,11 @@ export default function TabLayout() {
   return (
     <UserProvider>
       <Tabs
+        initialRouteName="index"
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
           headerShown: false,
           tabBarShowLabel: false,
-          // tabBarButton: () => null,
           tabBarStyle: {
             height: 75,
           },
@@ -36,7 +36,6 @@ export default function TabLayout() {
           options={{
             title: "Image Details",
             tabBarButton: () => null,
-            // tabBarIcon: () => null,
           }}
         />
 

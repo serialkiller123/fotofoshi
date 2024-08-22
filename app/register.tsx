@@ -1,4 +1,4 @@
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import React, { useContext, useState } from "react";
 import {
   View,
@@ -17,7 +17,7 @@ import { Colors } from "@/constants/Colors";
 import Button from "@/components/Button";
 
 export default function RegisterScreen() {
-  const { baseURL, apiKey, authToken } = useContext(UserContext);
+  const { baseURL, apiKey } = useContext(UserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -67,7 +67,7 @@ export default function RegisterScreen() {
 
       const { token, user } = response.data;
 
-      console.log("token", token, "user", user);
+      // console.log("token", token, "user", user);
 
       setLoading(false);
       await setAuthData(token, user);

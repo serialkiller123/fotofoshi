@@ -1,4 +1,4 @@
-import { useNavigation, router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import React, { useContext, useState } from "react";
 import {
   View,
@@ -6,26 +6,21 @@ import {
   TextInput,
   StyleSheet,
   Alert,
-  TouchableOpacity,
   TouchableNativeFeedback,
   ScrollView,
   ToastAndroid,
 } from "react-native";
 import { createAxiosInstance } from "../services/api";
-import { getSettings, setAuthData } from "@/services/tokenService";
+import { setAuthData } from "@/services/tokenService";
 import { UserContext } from "@/context/UserContext";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
 import Button from "@/components/Button";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 
 export default function LoginScreen() {
-  const { baseURL, authToken, apiKey, initializeSettings } =
-    useContext(UserContext);
+  const { baseURL, apiKey, initializeSettings } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [baseURL, setBaseURL] = useState("");
 
   useFocusEffect(
     React.useCallback(() => {
@@ -69,7 +64,7 @@ export default function LoginScreen() {
 
       const { token, user } = response.data;
 
-      console.log("token", token, "user", user);
+      // console.log("token", token, "user", user);
 
       setLoading(false);
       await setAuthData(token, user);

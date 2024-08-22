@@ -18,24 +18,19 @@ import Header from "@/components/Header";
 import CustomModal from "@/components/CustomModal";
 
 const ImageDetails = () => {
-  const { baseURL, authToken, fetchImages } = useContext(UserContext);
+  const { baseURL, authToken, fetchImages, user } = useContext(UserContext);
   const { id } = useLocalSearchParams();
   const [imageDetails, setImageDetails] = useState<any>(null);
-  const [author, setAuthor] = useState(null);
+  const [author, setAuthor] = useState<any>(null);
   const router = useRouter();
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const handleOpenModal = () => setModalVisible(true);
   const handleCloseModal = () => setModalVisible(false);
-  const handleConfirm = () => {
-    // Handle confirm action
-    setModalVisible(false);
-  };
 
   useEffect(() => {
     const fetchImageDetails = async () => {
       try {
-        // const response = await axios.get(`${baseURL}/api/images-app/${id}`);
         const response = await axios.get(
           `${baseURL}/api/images/${id}`,
 
@@ -47,6 +42,7 @@ const ImageDetails = () => {
           }
         );
         setImageDetails(response.data);
+        // console.log("image", response.data);
       } catch (error) {
         console.error("Error fetching image details:", error);
         handleError(error);
@@ -60,7 +56,6 @@ const ImageDetails = () => {
     const fetchUser = async () => {
       if (imageDetails) {
         try {
-          // const user = await getUser(image.user_id);
           const response = await axios.get(
             `${baseURL}/api/user/${imageDetails.user_id}`,
 
@@ -72,7 +67,7 @@ const ImageDetails = () => {
             }
           );
           setAuthor(response.data);
-          console.log(response.data);
+          // console.log("user", response.data);
         } catch (error) {
           console.error("Error fetching user:", error);
           handleError(error);
@@ -144,7 +139,7 @@ const ImageDetails = () => {
           </View>
         </View>
       </View>
-      {imageDetails && author && imageDetails.user_id === author.id && (
+      {imageDetails.user_id === user.id && (
         <Button
           textStyle={{ color: "#CC3B3B" }}
           style={styles.button}

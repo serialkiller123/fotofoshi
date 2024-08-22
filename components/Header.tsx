@@ -14,7 +14,6 @@ const Header: React.FC<HeaderProps> = ({ title, style }) => {
   );
 };
 
-// Define styles
 const styles = StyleSheet.create({
   container: {
     alignSelf: "center",

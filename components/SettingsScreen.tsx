@@ -12,11 +12,11 @@ import {
   setSettings,
   deleteSettings,
   deleteAuthData,
-  getApiKeys,
 } from "@/services/tokenService";
 import { router } from "expo-router";
 import { createAxiosInstance, handleError } from "@/services/api";
 import Button from "./Button";
+import CustomModal from "./CustomModal";
 
 const SettingsScreen = () => {
   const { baseURL, apiKey, authToken, initializeSettings, user } =
@@ -27,6 +27,10 @@ const SettingsScreen = () => {
   const [isKeyValid, setIsKeyValid] = useState(false);
   const [keyStatus, setKeyStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  const handleOpenModal = () => setModalVisible(true);
+  const handleCloseModal = () => setModalVisible(false);
 
   const axios = createAxiosInstance(websiteDomainInput, apiKeyInput);
 
@@ -40,17 +44,17 @@ const SettingsScreen = () => {
     try {
       const response = await axios.get(`/api/validate-apikey/${apiKeyInput}`);
 
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.data.valid) {
         setIsKeyValid(true);
         setKeyStatus("Valid key");
-        console.log(response.data.message);
+        // console.log(response.data.message);
         return true;
       } else {
         setIsKeyValid(false);
         setKeyStatus("InValid key");
-        console.log(response.data.message);
+        // console.log(response.data.message);
         return false;
       }
     } catch (error) {
@@ -201,11 +205,20 @@ const SettingsScreen = () => {
             <Button
               style={{ backgroundColor: "orangered" }}
               title="Delete Api Settings"
-              onPress={handleDelete}
+              onPress={handleOpenModal}
             />
           </View>
         </>
       )}
+
+      <CustomModal
+        visible={modalVisible}
+        onDismiss={handleCloseModal}
+        onConfirm={handleDelete}
+        // iconName="check-circle"
+        title="Are you sure?"
+        description="Are you sure you want to delete your API settings?"
+      />
     </View>
   );
 };
@@ -215,7 +228,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-
   inputContainer: {
     backgroundColor: "white",
     padding: 20,
