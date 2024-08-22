@@ -1,50 +1,59 @@
-# Welcome to your Expo app 👋
+# fotofoshi
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Fotofoshi is a photo sharing platform that allows users to share photos.
 
-## Get started
+## Table of Contents
 
-1. Install dependencies
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Key](#api-key)
+- [Website Domain](#website-domain)
+- [Development Server](#development-server)
+- [Testing](#testing)
+- [License](#license)
 
-   ```bash
+## Installation
+
+1. Clone the backend repository:
+
+   git clone https://github.com/Aljullu/fotofoshi-backend.git
+
+2. Serve the backend:
+
+   You need to serve the backend in a way that the mobile app can access it. For example, you can use ngrok or computers local IP to serve it. if you choose to use the local IP, please adjust the CORS in the laravel app to accept the IP.
+
+3. Clone the mobile app repository:
+
+   git clone https://github.com/Aljullu/fotofoshi-mobile.git
+
+4. Install dependencies:
+
    npm install
-   ```
 
-2. Start the app
+## Usage
 
-   ```bash
+Before using the app, you need to enter an API key and a website domain. The API key can be obtained from the web front end which is developed with Next.js. You need to enter the API key and the website domain to be able to login.
+
+### API Key
+
+The API key can be obtained from the web front end which is developed with Next.js.
+
+### Website Domain
+
+The website domain is the domain of the fotofoshi web front end. For example, if the fotofoshi web front end is hosted at `fotofoshi.com`, the website domain would be `https://fotofoshi.com`.
+
+## Development Server
+
+To start the development server, run the following command:
+
     npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## Testing
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+To run the tests, run the following command:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+    npm run test
 
-## Get a fresh project
+## License
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Fotofoshi is licensed under the MIT License. See [LICENSE](LICENSE) for details.
