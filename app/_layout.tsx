@@ -42,19 +42,19 @@ export default function RootLayout() {
     fetchSettings();
   }, []);
 
-  useEffect(() => {
-    if (loaded) {
-      if (!token || !baseURL || !apiKey) {
-        router.replace("/login");
-      } else {
-        router.replace("/(tabs)");
-      }
-    }
-  }, [token, loaded, baseURL, apiKey]);
+  // useEffect(() => {
+  //   if (loaded) {
+  //     if (!token || !baseURL || !apiKey) {
+  //       router.replace("/login");
+  //     } else {
+  //       router.replace("/(tabs)");
+  //     }
+  //   }
+  // }, [token, loaded, baseURL, apiKey]);
 
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
   const myDefaultTheme: Theme = {
     dark: false,
@@ -73,10 +73,18 @@ export default function RootLayout() {
       <Provider>
         <ThemeProvider value={myDefaultTheme}>
           <StatusBar backgroundColor="transparent" style="dark" translucent />
-          <AuthStack />
+          {token && baseURL && apiKey ? <AppStack /> : <AuthStack />}
         </ThemeProvider>
       </Provider>
     </UserProvider>
+  );
+}
+
+function AppStack() {
+  return (
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
 }
 
