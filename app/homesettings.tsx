@@ -1,6 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import SettingsScreen from "@/components/SettingsScreen";
+import NavigationHeader from "@/components/NavigationHeader";
+import { router } from "expo-router";
 
 const homesettings = () => {
   return (

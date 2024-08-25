@@ -17,6 +17,8 @@ import { router } from "expo-router";
 import { createAxiosInstance, handleError } from "@/services/api";
 import Button from "./Button";
 import CustomModal from "./CustomModal";
+import NavigationHeader from "./NavigationHeader";
+import GlobalHeader from "./GlobalHeader";
 
 const SettingsScreen = () => {
   const { baseURL, apiKey, authToken, initializeSettings, user } =
@@ -115,6 +117,12 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
+      <GlobalHeader
+        title={"Settings"}
+        titleColor="#64748B"
+        iconColor="#64748B"
+        onBack={() => router.back()}
+      />
       {!apiKey && !baseURL && (
         <View
           style={{

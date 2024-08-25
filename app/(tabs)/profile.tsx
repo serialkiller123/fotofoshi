@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  ToastAndroid,
 } from "react-native";
 import React, { useContext } from "react";
 import { deleteAuthData, getToken } from "../../services/tokenService";
@@ -13,6 +14,7 @@ import { router } from "expo-router";
 import { UserContext } from "../../context/UserContext";
 import { handleError } from "@/services/api";
 import { Ionicons } from "@expo/vector-icons";
+import GlobalHeader from "@/components/GlobalHeader";
 
 export default function Profile() {
   const { user, loading, baseURL } = useContext(UserContext);
@@ -44,6 +46,7 @@ export default function Profile() {
         );
 
         // console.log("Logout response", response.data);
+        ToastAndroid.show(`${response.data.message}`, ToastAndroid.SHORT);
 
         await deleteAuthData();
         router.replace("/login");
@@ -53,8 +56,19 @@ export default function Profile() {
       Alert.alert("Logout Error", "Unable to logout");
     }
   };
+
+  const handleLogin = async () => {
+    router.push("/login");
+  };
+
   return (
     <View style={styles.container}>
+      <GlobalHeader
+        title={"Profile"}
+        titleColor="#64748B"
+        iconColor="#64748B"
+        onBack={() => router.back()}
+      />
       <View style={styles.iconContainer}>
         <View style={styles.iconBackground}>
           <Ionicons name="person" size={40} color="#D9D9D9" />
@@ -64,15 +78,27 @@ export default function Profile() {
         <Text style={styles.name}>{user?.name}</Text>
         <Text style={styles.email}>{user?.email}</Text>
       </View>
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
-        <Ionicons
-          name="log-out-outline"
-          size={24}
-          color="#94A3B8"
-          style={styles.icon}
-        />
-      </TouchableOpacity>
+      {user ? (
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
+          <Ionicons
+            name="log-out-outline"
+            size={24}
+            color="#94A3B8"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+          <Ionicons
+            name="log-in-outline"
+            size={24}
+            color="#94A3B8"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -80,7 +106,7 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    padding: 20,
     justifyContent: "flex-start",
     alignItems: "center",
   },

@@ -18,6 +18,7 @@ export default function TabLayout() {
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
           headerShown: false,
+
           tabBarShowLabel: false,
           tabBarStyle: {
             height: 75,
@@ -27,6 +28,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
+            headerShown: false,
             title: "Home",
             tabBarButton: () => null,
           }}
@@ -42,23 +44,23 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            headerShown: true,
-            headerBackground: () => null,
-            headerLeft: () => (
-              <Ionicons
-                onPress={() => router.back()}
-                name="chevron-back"
-                size={20}
-                color="#64748B"
-                style={{ marginLeft: 20 }}
-              />
-            ),
+            // headerShown: true,
+            // headerBackground: () => null,
+            // headerLeft: () => (
+            //   <Ionicons
+            //     onPress={() => router.back()}
+            //     name="chevron-back"
+            //     size={20}
+            //     color="#64748B"
+            //     style={{ marginLeft: 20 }}
+            //   />
+            // ),
 
-            title: "Settings",
-            headerTitleStyle: { color: "#64748B" },
-            headerLeftContainerStyle: {
-              marginLeft: 20,
-            },
+            // title: "Settings",
+            // headerTitleStyle: { color: "#64748B" },
+            // headerLeftContainerStyle: {
+            //   marginLeft: 20,
+            // },
 
             tabBarIcon: ({ color, focused, size }) => (
               <TabBarIcon
@@ -100,22 +102,22 @@ export default function TabLayout() {
         <Tabs.Screen
           name="profile"
           options={{
-            headerShown: true,
-            title: "Profile",
-            headerTitleStyle: { color: "#64748B" },
-            headerLeft: () => (
-              <Ionicons
-                onPress={() => router.back()}
-                name="chevron-back"
-                size={20}
-                color="#64748B"
-                style={{ marginLeft: 20 }}
-              />
-            ),
-            headerLeftContainerStyle: {
-              marginLeft: 20,
-            },
-            headerBackground: () => null,
+            // headerShown: true,
+            // title: "Profile",
+            // headerTitleStyle: { color: "#64748B" },
+            // headerLeft: () => (
+            //   <Ionicons
+            //     onPress={() => router.back()}
+            //     name="chevron-back"
+            //     size={20}
+            //     color="#64748B"
+            //     style={{ marginLeft: 20 }}
+            //   />
+            // ),
+            // headerLeftContainerStyle: {
+            //   marginLeft: 20,
+            // },
+            // headerBackground: () => null,
             tabBarIcon: ({ color, focused, size }) => (
               <TabBarIcon
                 name={focused ? "person" : "person"}

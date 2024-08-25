@@ -15,6 +15,7 @@ import { setAuthData } from "@/services/tokenService";
 import { UserContext } from "@/context/UserContext";
 import { Colors } from "@/constants/Colors";
 import Button from "@/components/Button";
+import CustomHeader from "@/components/CustomHeader";
 
 export default function RegisterScreen() {
   const { baseURL, apiKey } = useContext(UserContext);
@@ -86,6 +87,7 @@ export default function RegisterScreen() {
 
   return (
     <View style={{ flex: 1 }}>
+      <CustomHeader onSettingsPress={() => router.push("/homesettings")} />
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.innerContainer}>
           <Text style={styles.title}>Register to FotoFoshi</Text>
